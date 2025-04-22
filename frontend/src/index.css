@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add Inter font (or configure in tailwind.config.js) */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Optional: Add some base styles */
+body {
+    @apply bg-gray-100 text-gray-800;
+}
+
+h1 {
+    @apply text-3xl font-bold mb-4;
+}
+
+h2 {
+    @apply text-2xl font-semibold mb-3;
+}
