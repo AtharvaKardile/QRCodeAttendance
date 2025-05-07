@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System Tester</title>
+</head>
+<body>
+    <h1>Attendance System Tester</h1>
+
+    <div>
+        <h2>Class Management</h2>
+        <div>
+            <h3>Add Class</h3>
+            <form id="addClass">
+                <div>
+                    <label for="class_id">Class ID:</label>
+                    <input type="text" id="class_id" name="Class_ID" required>
+                </div>
+                <div>
+                    <label for="class_name">Year:</label>
+                    <input type="number" id="class_name" name="Name" required>
+                </div>
+                <div>
+                    <label for="class_description">No_of_students:</label>
+                    <input type="number" id="class_description" name="Description">
+                </div>
+                <button type="submit">Add Class</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>View Classes</h3>
+            <button id="fetchClasses">Get All Classes</button>
+            <div id="classes-result"></div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Division Management</h2>
+        <div>
+            <h3>Add Division</h3>
+            <form id="addDivision">
+                <div>
+                    <label for="div_id">Division ID:</label>
+                    <input type="text" id="div_id" name="Div_ID" required>
+                </div>
+                <div>
+                    <label for="div_name">Name:</label>
+                    <input type="text" id="div_name" name="Name" required>
+                </div>
+                <div>
+                    <label for="div_class_id">Class ID:</label>
+                    <input type="text" id="div_class_id" name="Class_ID" required>
+                </div>
+                <button type="submit">Add Division</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>View Divisions</h3>
+            <button id="fetchDivisions">Get All Divisions</button>
+            <div id="divisions-result"></div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Student Management</h2>
+        <div>
+            <h3>Register Student</h3>
+            <form id="registerStudent">
+                <div>
+                    <label for="prn">PRN:</label>
+                    <input type="text" id="prn" name="PRN" required>
+                </div>
+                <div>
+                    <label for="student_name">Name:</label>
+                    <input type="text" id="student_name" name="Name" required>
+                </div>
+                <div>
+                    <label for="student_mobile">Mobile Number:</label>
+                    <input type="text" id="student_mobile" name="Mobile_Number" required>
+                </div>
+                <div>
+                    <label for="student_email">Email ID:</label>
+                    <input type="email" id="student_email" name="Email_ID" required>
+                </div>
+                <div>
+                    <label for="student_password">Password:</label>
+                    <input type="password" id="student_password" name="Password" required>
+                </div>
+                <div>
+                    <label for="student_div_id">Division ID:</label>
+                    <input type="text" id="student_div_id" name="Div_ID" required>
+                </div>
+                <button type="submit">Register Student</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>Student Login</h3>
+            <form id="studentLogin">
+                <div>
+                    <label for="login_prn">PRN:</label>
+                    <input type="text" id="login_prn" name="PRN" required>
+                </div>
+                <div>
+                    <label for="login_password">Password:</label>
+                    <input type="password" id="login_password" name="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div id="student-login-result"></div>
+        </div>
+
+        <div>
+            <h3>View Student Courses</h3>
+            <div>
+                <label for="student_prn">PRN:</label>
+                <input type="text" id="student_prn" name="PRN">
+                <button id="fetchStudentCourses">Get Courses</button>
+            </div>
+            <div id="student-courses-result"></div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Teacher Management</h2>
+        <div>
+            <h3>Register Teacher</h3>
+            <form id="registerTeacher">
+                <div>
+                    <label for="teacher_email">Email:</label>
+                    <input type="email" id="teacher_email" name="Email" required>
+                </div>
+                <div>
+                    <label for="teacher_name">Name:</label>
+                    <input type="text" id="teacher_name" name="Name" required>
+                </div>
+                <div>
+                    <label for="teacher_password">Password:</label>
+                    <input type="password" id="teacher_password" name="Password" required>
+                </div>
+                <div>
+                    <label for="teacher_mobile">Mobile Number:</label>
+                    <input type="text" id="teacher_mobile" name="Mobile_Number" required>
+                </div>
+                <button type="submit">Register Teacher</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>Teacher Login</h3>
+            <form id="teacherLogin">
+                <div>
+                    <label for="login_teacher_email">Email:</label>
+                    <input type="email" id="login_teacher_email" name="Email" required>
+                </div>
+                <div>
+                    <label for="login_teacher_password">Password:</label>
+                    <input type="password" id="login_teacher_password" name="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div id="teacher-login-result"></div>
+        </div>
+
+        <div>
+            <h3>View Teacher Courses</h3>
+            <div>
+                <label for="teacher_email_courses">Email:</label>
+                <input type="email" id="teacher_email_courses" name="Email">
+                <button id="fetchTeacherCourses">Get Courses</button>
+            </div>
+            <div id="teacher-courses-result"></div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Attendance Management</h2>
+        <div>
+            <h3>Generate QR Code</h3>
+            <form id="generateQR">
+                <div>
+                    <label for="qr_course_id">Course ID:</label>
+                    <input type="text" id="qr_course_id" name="Course_ID" required>
+                </div>
+                <div>
+                    <label for="qr_teacher_email">Teacher Email:</label>
+                    <input type="email" id="qr_teacher_email" name="Teacher_Email" required>
+                </div>
+                <button type="submit">Generate QR</button>
+            </form>
+            <div id="qr-result"></div>
+        </div>
+
+        <div>
+            <h3>Mark Attendance</h3>
+            <form id="markAttendance">
+                <div>
+                    <label for="attendance_prn">PRN:</label>
+                    <input type="text" id="attendance_prn" name="PRN" required>
+                </div>
+                <div>
+                    <label for="attendance_course_id">Course ID:</label>
+                    <input type="text" id="attendance_course_id" name="Course_ID" required>
+                </div>
+                <div>
+                    <label for="attendance_qr_id">QR ID:</label>
+                    <input type="text" id="attendance_qr_id" name="QR_ID" required>
+                </div>
+                <button type="submit">Mark Attendance</button>
+            </form>
+            <div id="attendance-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Class Management
+        document.getElementById('addClass').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/class', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding class');
+            }
+        });
+
+        document.getElementById('fetchClasses').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/classes');
+                const data = await response.json();
+
+                const resultDiv = document.getElementById('classes-result');
+                resultDiv.innerHTML = '<h4>Classes:</h4>';
+
+                const list = document.createElement('ul');
+                data.forEach(cls => {
+                    const item = document.createElement('li');
+                    item.textContent = `ID: ${cls.Class_ID}, Name: ${cls.Name}, Description: ${cls.Description || 'N/A'}`;
+                    list.appendChild(item);
+                });
+
+                resultDiv.appendChild(list);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error fetching classes');
+            }
+        });
+
+        // Division Management
+        document.getElementById('addDivision').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/division', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding division');
+            }
+        });
+
+        document.getElementById('fetchDivisions').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/divisions');
+                const data = await response.json();
+
+                const resultDiv = document.getElementById('divisions-result');
+                resultDiv.innerHTML = '<h4>Divisions:</h4>';
+
+                const list = document.createElement('ul');
+                data.forEach(div => {
+                    const item = document.createElement('li');
+                    item.textContent = `ID: ${div.Div_ID}, Name: ${div.Name}, Class: ${div.Class_Name}`;
+                    list.appendChild(item);
+                });
+
+                resultDiv.appendChild(list);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error fetching divisions');
+            }
+        });
+
+        // Student Management
+        document.getElementById('registerStudent').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/register_student', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error registering student');
+            }
+        });
+
+        document.getElementById('studentLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/login_student', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                const resultDiv = document.getElementById('student-login-result');
+                resultDiv.innerHTML = `<p>Status: ${response.ok ? 'Success' : 'Failed'}</p>`;
+
+                if (response.ok) {
+                    resultDiv.innerHTML += `
+                        <p>Welcome, ${result.student.Name}!</p>
+                        <p>PRN: ${result.student.PRN}</p>
+                        <p>Email: ${result.student.Email_ID}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('student-login-result').innerHTML = '<p>Login failed</p>';
+            }
+        });
+
+        document.getElementById('fetchStudentCourses').addEventListener('click', async () => {
+            const prn = document.getElementById('student_prn').value;
+
+            if (!prn) {
+                alert('Please enter a PRN');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/student/${prn}/courses`);
+                const data = await response.json();
+
+                const resultDiv = document.getElementById('student-courses-result');
+                resultDiv.innerHTML = `<h4>Courses for PRN ${prn}:</h4>`;
+
+                const list = document.createElement('ul');
+                data.forEach(course => {
+                    const item = document.createElement('li');
+                    item.textContent = `ID: ${course.Course_ID}, Name: ${course.Name}`;
+                    list.appendChild(item);
+                });
+
+                resultDiv.appendChild(list);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error fetching student courses');
+            }
+        });
+
+        // Teacher Management
+        document.getElementById('registerTeacher').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/register_teacher', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                alert(result);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error registering teacher');
+            }
+        });
+
+        document.getElementById('teacherLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/login_teacher', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                const resultDiv = document.getElementById('teacher-login-result');
+                resultDiv.innerHTML = `<p>Status: ${response.ok ? 'Success' : 'Failed'}</p>`;
+
+                if (response.ok) {
+                    resultDiv.innerHTML += `
+                        <p>Welcome, ${result.teacher.Name}!</p>
+                        <p>Email: ${result.teacher.Email}</p>
+                        <p>Mobile: ${result.teacher.Mobile_Number}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('teacher-login-result').innerHTML = '<p>Login failed</p>';
+            }
+        });
+
+        document.getElementById('fetchTeacherCourses').addEventListener('click', async () => {
+            const email = document.getElementById('teacher_email_courses').value;
+
+            if (!email) {
+                alert('Please enter teacher email');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/teacher/${email}/courses`);
+                const data = await response.json();
+
+                const resultDiv = document.getElementById('teacher-courses-result');
+                resultDiv.innerHTML = `<h4>Courses for teacher ${email}:</h4>`;
+
+                const list = document.createElement('ul');
+                data.forEach(course => {
+                    const item = document.createElement('li');
+                    item.textContent = `ID: ${course.Course_ID}, Name: ${course.Name}`;
+                    list.appendChild(item);
+                });
+
+                resultDiv.appendChild(list);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error fetching teacher courses');
+            }
+        });
+
+        // Attendance Management
+        document.getElementById('generateQR').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/generate_qr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                const resultDiv = document.getElementById('qr-result');
+                resultDiv.innerHTML = `
+                    <p>QR Code Generated!</p>
+                    <p>QR ID: ${result.QR_ID}</p>
+                    <p>Generated Time: ${new Date(result.Generated_Time).toLocaleString()}</p>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error generating QR code');
+            }
+        });
+
+        document.getElementById('markAttendance').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/mark_attendance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+
+                const resultDiv = document.getElementById('attendance-result');
+                resultDiv.innerHTML = `<p>${result}</p>`;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error marking attendance');
+            }
+        });
+    </script>
+</body>
+</html>

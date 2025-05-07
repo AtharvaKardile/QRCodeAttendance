@@ -132,13 +132,9 @@ function AdminDashboard() {
                 setLoading(false);
             }
         };
-        if (auth.token) { // Ensure user is authenticated
-            fetchData();
-        } else {
-            setError("Authentication required to access admin panel.");
-        }
-
-    }, [activeTab, auth.token]); // Re-fetch when tab changes or token becomes available
+        // Ensure user is authenticated
+        fetchData();
+        }, [activeTab]); // Re-fetch when tab changes or token becomes available
 
 
     const handleAddClass = async (formData) => {
@@ -147,7 +143,7 @@ function AdminDashboard() {
         setSuccess('');
         try {
             // API Call: Add a new class
-            const response = await api.addClass(formData, auth.token);
+            const response = await api.addClass(formData);
             setSuccess(response.message || 'Class added successfully!');
             // Refresh class list
             const updatedClasses = await api.getClasses();
@@ -165,7 +161,7 @@ function AdminDashboard() {
         setSuccess('');
         try {
             // API Call: Add a new division
-            const response = await api.addDivision(formData, auth.token);
+            const response = await api.addDivision(formData);
             setSuccess(response.message || 'Division added successfully!');
             // Refresh division list
             const updatedDivisions = await api.getDivisions();
@@ -183,7 +179,7 @@ function AdminDashboard() {
         setSuccess('');
         try {
             // API Call: Add a new course
-            const response = await api.addCourse(formData, auth.token);
+            const response = await api.addCourse(formData);
             setSuccess(response.message || 'Course added successfully!');
             // Refresh course list
             const updatedCourses = await api.getCourses();

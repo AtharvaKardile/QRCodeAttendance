@@ -1,0 +1,12 @@
+.idea
+
+frontend/node_modules
+frontend/.env
+frontend/.gitignore
+frontend/public
+
+Server/node_modules
+Server/process.env
+server/server.js
+server/jwt.js
+server/Database_SQl.txt

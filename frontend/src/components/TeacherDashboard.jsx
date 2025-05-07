@@ -21,12 +21,12 @@ function TeacherDashboard() {
     // Fetch teacher's courses
     useEffect(() => {
         const fetchCourses = async () => {
-            if (auth.token && auth.user?.Email_ID) {
+            if (auth.user?.Email_ID) {
                 setLoadingCourses(true);
                 setError('');
                 try {
                     // API Call: Get courses taught by the logged-in teacher
-                    const fetchedCourses = await api.getTeacherCourses(auth.user.Email_ID, auth.token);
+                    const fetchedCourses = await api.getTeacherCourses(auth.user.Email_ID);
                     setCourses(fetchedCourses);
                     // Automatically select the first course if available
                     if (fetchedCourses.length > 0) {
@@ -44,18 +44,18 @@ function TeacherDashboard() {
             }
         };
         fetchCourses();
-    }, [auth.token, auth.user?.Email_ID]);
+    }, [auth.user?.Email_ID]);
 
     // Fetch attendance report when selectedCourse changes
     useEffect(() => {
         const fetchAttendanceReport = async () => {
-            if (auth.token && auth.user?.Email_ID && selectedCourse?.Course_Code) {
+            if (auth.user?.Email_ID && selectedCourse?.Course_Code) {
                 setLoadingReport(true);
                 setError('');
                 setAttendanceReport([]); // Clear previous report
                 try {
                     // API Call: Get attendance report for the selected course
-                    const report = await api.getTeacherAttendanceReport(auth.user.Email_ID, selectedCourse.Course_Code, auth.token);
+                    const report = await api.getTeacherAttendanceReport(auth.user.Email_ID, selectedCourse.Course_Code);
                     setAttendanceReport(report);
                 } catch (err) {
                     setError(`Failed to fetch attendance report for ${selectedCourse.Course_Name}: ${err.message}`);
@@ -68,17 +68,17 @@ function TeacherDashboard() {
             }
         };
         fetchAttendanceReport();
-    }, [selectedCourse, auth.token, auth.user?.Email_ID]); // Re-fetch if course, token, or email changes
+    }, [selectedCourse, auth.user?.Email_ID]); // Re-fetch if course, token, or email changes
 
     // Fetch students for the teacher (optional, could be useful)
     useEffect(() => {
         const fetchStudents = async () => {
-            if (auth.token && auth.user?.Email_ID) {
+            if (auth.user?.Email_ID) {
                 setLoadingStudents(true);
                 setError('');
                 try {
                     // API Call: Get all students associated with the teacher's courses
-                    const fetchedStudents = await api.getTeacherStudents(auth.user.Email_ID, auth.token);
+                    const fetchedStudents = await api.getTeacherStudents(auth.user.Email_ID);
                     setStudents(fetchedStudents);
                 } catch (err) {
                     setError('Failed to fetch students: ' + err.message);
@@ -89,11 +89,11 @@ function TeacherDashboard() {
             }
         };
         // fetchStudents(); // Uncomment if you want to load students on dashboard load
-    }, [auth.token, auth.user?.Email_ID]);
+    }, [auth.user?.Email_ID]);
 
     // Handle QR Code Generation
     const handleGenerateQr = async () => {
-        if (!selectedCourse || !auth.token || !auth.user?.Email_ID) {
+        if (!selectedCourse || !auth.user?.Email_ID) {
             setError("Please select a course first.");
             return;
         }
@@ -106,11 +106,11 @@ function TeacherDashboard() {
             const response = await api.generateQrCode({
                 Course_Code: selectedCourse.Course_Code,
                 Teacher_Email: auth.user.Email_ID
-            }, auth.token);
+            },);
 
             if (response.qr && response.qr.QR_ID) {
                 // API Call: Get the displayable QR code data (including data URL)
-                const displayData = await api.displayQrCode(response.qr.QR_ID, auth.token);
+                const displayData = await api.displayQrCode(response.qr.QR_ID);
                 setGeneratedQrData(displayData.qr); // Store the full QR data with image URL
             } else {
                 throw new Error("QR generation response did not include QR_ID.");

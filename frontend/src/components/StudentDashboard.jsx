@@ -16,12 +16,12 @@ function StudentDashboard() {
     // Fetch student's courses
     useEffect(() => {
         const fetchCourses = async () => {
-            if (auth.token && auth.user?.PRN) {
+            if (auth.user?.PRN) {
                 setLoadingCourses(true);
                 setError('');
                 try {
                     // API Call: Get courses for the logged-in student
-                    const fetchedCourses = await api.getStudentCourses(auth.user.PRN, auth.token);
+                    const fetchedCourses = await api.getStudentCourses(auth.user.PRN);
                     setCourses(fetchedCourses);
                 } catch (err) {
                     setError('Failed to fetch courses: ' + err.message);
@@ -36,17 +36,17 @@ function StudentDashboard() {
         };
 
         fetchCourses();
-    }, [auth.token, auth.user?.PRN]); // Re-fetch if token or PRN changes
+    }, [auth.user?.PRN]); // Re-fetch if token or PRN changes
 
     // Fetch student's attendance summary
     useEffect(() => {
         const fetchAttendance = async () => {
-            if (auth.token && auth.user?.PRN) {
+            if ( auth.user?.PRN) {
                 setLoadingAttendance(true);
                 setError(''); // Clear previous errors specific to attendance
                 try {
                     // API Call: Get attendance summary for the logged-in student
-                    const fetchedAttendance = await api.getStudentAttendance(auth.user.PRN, auth.token);
+                    const fetchedAttendance = await api.getStudentAttendance(auth.user.PRN);
                     setAttendance(fetchedAttendance);
                 } catch (err) {
                     setError('Failed to fetch attendance: ' + err.message);
@@ -61,21 +61,21 @@ function StudentDashboard() {
         };
 
         fetchAttendance();
-    }, [auth.token, auth.user?.PRN]); // Re-fetch if token or PRN changes
+    }, [auth.user?.PRN]); // Re-fetch if token or PRN changes
 
     const handleScanSuccess = async (qrId) => {
         console.log(`QR Scanned: ${qrId}`);
         setShowScanner(false); // Close scanner after scan
         setError(''); // Clear previous errors
 
-        if (!auth.token || !auth.user?.PRN) {
+        if (!auth.user?.PRN) {
             setError("Cannot mark attendance: Not logged in or PRN missing.");
             return;
         }
 
         try {
             // API Call: Mark attendance using the scanned QR ID
-            const response = await api.markAttendance({PRN: auth.user.PRN, QR_ID: qrId}, auth.token);
+            const response = await api.markAttendance({PRN: auth.user.PRN, QR_ID: qrId});
             alert(response.message || 'Attendance marked successfully!'); // Simple feedback
             // Optionally re-fetch attendance data here to update the view immediately
             // fetchAttendance(); // Uncomment if needed
